@@ -1,0 +1,56 @@
+@startuml
+class idv.sheng.collection_observer_dp.CollectionSubscriber {
+- Flow.Subscription subscription
+- int count
++ void onSubscribe(Flow.Subscription)
++ void onNext(String)
++ void onError(Throwable)
++ void onComplete()
+}
+class idv.sheng.Main {
++ {static} void main(String[])
++ {static} void countObserverDpTest()
++ {static} void collectionObserverDpTest()
+}
+class idv.sheng.count_observer_dp.CountSubscriber {
+- Flow.Subscription subscription
+- int count
++ void onSubscribe(Flow.Subscription)
++ void onNext(Integer)
++ void onError(Throwable)
++ void onComplete()
+}
+class idv.sheng.count_observer_dp.CountPublisher {
+- int count
+- long interval
+- boolean isCanceled
++ void subscribe(Flow.Subscriber<? super Integer>)
+}
+class idv.sheng.count_observer_dp.CountPublisher$CountSubscription {
++ void request(long)
++ void cancel()
+}
+class idv.sheng.collection_observer_dp.CollectionPublisher {
+- int count
+- List<String> container
+- long interval
+- boolean isCanceled
++ void subscribe(Flow.Subscriber<? super String>)
+}
+class idv.sheng.collection_observer_dp.CollectionPublisher$CountSubscription {
++ void request(long)
++ void cancel()
+}
+
+
+idv.sheng.collection_observer_dp.Subscriber <|.. idv.sheng.collection_observer_dp.CollectionSubscriber
+idv.sheng.count_observer_dp.Subscriber <|.. idv.sheng.count_observer_dp.CountSubscriber
+idv.sheng.count_observer_dp.Publisher <|.. idv.sheng.count_observer_dp.CountPublisher
+idv.sheng.count_observer_dp.Subscriber <.. idv.sheng.count_observer_dp.CountPublisher
+idv.sheng.count_observer_dp.CountPublisher +.. idv.sheng.count_observer_dp.CountPublisher$CountSubscription
+idv.sheng.count_observer_dp.Subscription <|.. idv.sheng.count_observer_dp.CountPublisher$CountSubscription
+idv.sheng.count_observer_dp.Subscription <.. idv.sheng.count_observer_dp.CountSubscriber
+idv.sheng.collection_observer_dp.Publisher <|.. idv.sheng.collection_observer_dp.CollectionPublisher
+idv.sheng.collection_observer_dp.CollectionPublisher +.. idv.sheng.collection_observer_dp.CollectionPublisher$CountSubscription
+idv.sheng.collection_observer_dp.Subscription <|.. idv.sheng.collection_observer_dp.CollectionPublisher$CountSubscription
+@enduml
